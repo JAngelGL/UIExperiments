@@ -1,0 +1,50 @@
+import tkinter as tk
+from tkinter import filedialog
+
+class FileRouteInterface:
+    def __init__(self, master):
+        self.master = master
+        master.title("File Route Interface")
+
+        # Create a frame for the route label and entry
+        route_frame = tk.Frame(master)
+        route_frame.pack(pady=10)
+
+        tk.Label(route_frame, text="File Route:").pack(side="left")
+        self.route_entry = tk.Entry(route_frame, width=50)
+        self.route_entry.pack(side="left", fill="x", expand=True)
+
+        # Create a button to set the file route
+        self.set_route_button = tk.Button(master, text="Set Route", command=self.set_route)
+        self.set_route_button.pack(pady=5)
+
+        # Create a frame for the buttons and checkboxes
+        self.buttons_and_checkboxes_frame = tk.Frame(master)
+        self.buttons_and_checkboxes_frame.pack(fill="x", expand=True)
+
+        # Create the first button
+        self.button1 = tk.Button(self.buttons_and_checkboxes_frame, text="Button 1")
+        self.button1.pack(side="left", padx=5, pady=5)
+
+        # Create the second button
+        self.button2 = tk.Button(self.buttons_and_checkboxes_frame, text="Button 2")
+        self.button2.pack(side="left", padx=5, pady=5)
+
+        # Create the checkboxes
+        self.checkbox1 = tk.BooleanVar()
+        tk.Checkbutton(self.buttons_and_checkboxes_frame, text="Checkbox 1", variable=self.checkbox1).pack(side="left", padx=5, pady=5)
+
+        self.checkbox2 = tk.BooleanVar()
+        tk.Checkbutton(self.buttons_and_checkboxes_frame, text="Checkbox 2", variable=self.checkbox2).pack(side="left", padx=5, pady=5)
+
+        self.checkbox3 = tk.BooleanVar()
+        tk.Checkbutton(self.buttons_and_checkboxes_frame, text="Checkbox 3", variable=self.checkbox3).pack(side="left", padx=5, pady=5)
+
+    def set_route(self):
+        file_route = filedialog.askdirectory()
+        if file_route:
+            self.route_entry.insert(0, file_route)
+
+root = tk.Tk()
+app = FileRouteInterface(root)
+root.mainloop()
