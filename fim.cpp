@@ -5,42 +5,39 @@ class Program
 {
     static void Main()
     {
-        // Ruta completa del archivo Python
-        string pythonPath = "ruta\\a\\python.exe";  // Cambia esto por la ruta real de tu instalación de Python
-        string scriptPath = "ruta\\del\\script.py"; // Cambia esto por la ruta de tu script Python
+        // Ruta al archivo de script de Python
+        string scriptPath = @"C:\Ruta\Al\Archivo\Script.py";
 
-        // Argumentos del proceso Python (ruta del script)
-        string arguments = $"\"{scriptPath}\"";
-
-        // Configurar el proceso de inicio
-        ProcessStartInfo startInfo = new ProcessStartInfo
+        // Crear un proceso de Python
+        ProcessStartInfo psi = new ProcessStartInfo
         {
-            FileName = pythonPath,
-            Arguments = arguments,
+            FileName = "python", // Asegúrate de que "python" esté en el PATH del sistema
+            Arguments = scriptPath,
             RedirectStandardOutput = true,
             RedirectStandardError = true,
             UseShellExecute = false,
             CreateNoWindow = true
         };
 
-        // Iniciar el proceso
-        using (Process process = new Process { StartInfo = startInfo })
+        using (Process process = new Process { StartInfo = psi })
         {
+            // Iniciar el proceso
             process.Start();
 
-            // Leer la salida estándar y la salida de error
+            // Leer la salida estándar y la salida de error (opcional)
             string output = process.StandardOutput.ReadToEnd();
             string error = process.StandardError.ReadToEnd();
 
+            // Esperar a que el proceso termine
             process.WaitForExit();
 
-            // Imprimir la salida y los errores (si los hay)
+            // Mostrar la salida y los errores (puedes personalizar esta parte según tus necesidades)
             Console.WriteLine("Salida del script:");
             Console.WriteLine(output);
 
             if (!string.IsNullOrEmpty(error))
             {
-                Console.WriteLine("Errores:");
+                Console.WriteLine("Errores del script:");
                 Console.WriteLine(error);
             }
         }
